@@ -22,18 +22,20 @@ const AuthProviders = () => {
             const res = await getProviders();
             setProviders(res);
         };
+        fetchProviders();
     }, []);
 
     if (providers) {
         return (
             <div>
                 {Object.values(providers).map((provider: Provider, index) => (
-                    <button key={index}>{provider.id}</button>
+                    <button key={index} onClick={() => signIn(provider?.id)}>
+                        {provider.id}
+                    </button>
                 ))}
             </div>
         );
     }
-    return <div>AuthProviders</div>;
 };
 
 export default AuthProviders;
