@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/session";
 
 const Navbar = async () => {
     const session = await getCurrentUser();
+    console.log("🚀 ~ file: Navbar.tsx:10 ~ Navbar ~ session:", session);
     return (
         <nav className="flexBetween navbar">
             <div className="flex-1 flexStart gap-10">
@@ -25,8 +26,11 @@ const Navbar = async () => {
             <div className="flexCenter gap-4">
                 {session?.user ? (
                     <>
-                        {session.user.image && <Image src={session?.user?.image} alt={session.user.name} height={40} width={40} className="rounded-full" />}
-                        User Photo
+                        {session?.user?.image && (
+                            <Link href={`/profile/${session?.user?.id}`}>
+                                <Image src={session?.user?.image} alt={session.user.name} height={40} width={40} className="rounded-full" />
+                            </Link>
+                        )}
                         <Link href={"/create-project"}>Share Work</Link>
                     </>
                 ) : (

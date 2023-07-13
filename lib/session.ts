@@ -28,6 +28,7 @@ export const authOptions: NextAuthOptions = {
         },
         decode: async ({ secret, token }) => {
             const decodedToken = jsonwebtoken.verify(token!, secret) as JWT;
+            console.log("🚀 ~ file: session.ts:31 ~ decode: ~ decodedToken:", decodedToken);
             return decodedToken;
         },
     },
@@ -48,6 +49,7 @@ export const authOptions: NextAuthOptions = {
                         ...data.user,
                     },
                 };
+                console.log("🚀 ~ file: session.ts:53 ~ session ~ newSession:", session);
                 return newSession;
             } catch (error) {
                 console.log("🚀 ~ file: session.ts:40 ~ session ~ error:", error);
@@ -58,6 +60,7 @@ export const authOptions: NextAuthOptions = {
             try {
                 // get the user if they exist
                 const userExists = (await getUser(user?.email as string)) as { user?: UserProfile };
+                console.log("🚀 ~ file: session.ts:62 ~ signIn ~ userExists:", userExists);
 
                 // if they don't exist, create them
                 if (!userExists.user) {
@@ -65,8 +68,8 @@ export const authOptions: NextAuthOptions = {
                 }
                 return true;
             } catch (error: any) {
-                console.log("🚀 ~ file: session.ts:33 ~ signIn ~ error:", error);
-                return false;
+                console.log("🚀 ~ file: session.ts:33 ~ signIn ~ error:", JSON.stringify(error));
+                return error;
             }
         },
     },
